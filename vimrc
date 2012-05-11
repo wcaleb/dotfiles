@@ -92,6 +92,23 @@ vnoremap <Up> <C-B>
 vnoremap <leader><Down> <C-D>
 vnoremap <leader><Up> <C-U>
 
+" Expand directory of current file at command line
+" http://vimcasts.org/episodes/the-edit-command/
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+
+" Copy/paste to system clipboard
+vmap <silent> <C-c> y:call system("pbcopy", getreg("\""))<CR>
+vmap <silent> <C-x> d:call system("pbcopy", getreg("\""))<CR>
+nmap <silent> <C-p> :call setreg("\"",system("pbpaste"))<CR>p
+imap <silent> <C-p> <Esc>:call setreg("\"",system("pbpaste"))<CR>pa
+" nmap <C-p> :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
+" imap <C-p> <Esc>:set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
+" vmap <C-c> y:exe "!echo " . shellescape(getreg('0')) . "\| pbcopy"<cr><cr>
+" vmap <C-x> d:exe "!echo " . shellescape(getreg('"')) . "\| pbcopy"<cr><cr>
+" nmap <C-c> :.w !pbcopy<cr><cr>
+
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -124,7 +141,7 @@ function! PanRtf()
 endfunction
 
 function! PanSyllabus()
-   exec ":! markdown2pdf --template=$HOME/.pandoc/templates/syllabus.tex -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".pdf " . fnameescape(expand('%:p'))
+   exec ":! pandoc -s -S --template=syllabus.tex -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".pdf " . fnameescape(expand('%:p'))
 endfunction
 
 function! PanLSU()
@@ -144,23 +161,6 @@ nmap `s :FufFile $HOME/Students/<cr>
 nmap `t :FufFile $HOME/.pandoc/templates/<cr>
 nmap `y :FufFile $HOME/Dropbox/syllabi/<cr>
 let g:fuf_file_exclude = '\v\~$|\.(DS_Store|o|exe|dll|bak|orig|swp|pdf|doc|docx)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-
-" Expand directory of current file at command line
-" http://vimcasts.org/episodes/the-edit-command/
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <leader>ew :e %%
-map <leader>es :sp %%
-
-" Copy/paste to system clipboard
-vmap <silent> <C-c> y:call system("pbcopy", getreg("\""))<CR>
-vmap <silent> <C-x> d:call system("pbcopy", getreg("\""))<CR>
-nmap <silent> <C-p> :call setreg("\"",system("pbpaste"))<CR>p
-imap <silent> <C-p> <Esc>:call setreg("\"",system("pbpaste"))<CR>pa
-" nmap <C-p> :set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
-" imap <C-p> <Esc>:set paste<cr>:r !pbpaste<cr>:set nopaste<cr>
-" vmap <C-c> y:exe "!echo " . shellescape(getreg('0')) . "\| pbcopy"<cr><cr>
-" vmap <C-x> d:exe "!echo " . shellescape(getreg('"')) . "\| pbcopy"<cr><cr>
-" nmap <C-c> :.w !pbcopy<cr><cr>
 
 " Command for my personal bibtex system
 command! -nargs=1 Bib :exe "e! " . fnameescape("/Users/wcm1/Dropbox/pubs/bib/<args>.bib")
