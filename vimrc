@@ -30,10 +30,11 @@ map <leader>ew :e %%
 map <leader>es :sp %%
 
 " Copy selection to system clipboard, removing hardwraps with pandoc
-vmap <silent> <C-c> y:call setreg("p",system("pandoc -t plain --no-wrap", getreg("\"")))<CR>:call system("pbcopy", getreg("p"))<CR>
-vmap <silent> <C-x> d:call setreg("p",system("pandoc -t plain --no-wrap", getreg("\"")))<CR>:call system("pbcopy", getreg("p"))<CR>
+vmap <silent> <C-c> "+y:let clip=getreg("+")<CR>:call setreg("+",system("pandoc -t plain --no-wrap",clip))<CR>
+vmap <silent> <C-x> "+d:let clip=getreg("+")<CR>:call setreg("+",system("pandoc -t plain --no-wrap",clip))<CR>
 nmap <silent> <C-p> :call setreg("\"",system("pbpaste"))<CR>p
 imap <silent> <C-p> <Esc>:call setreg("\"",system("pbpaste"))<CR>pa
+" vmap <silent> <C-c> y:call setreg("p",system("pandoc -t plain --no-wrap", getreg("\"")))<CR>:call system("pbcopy", getreg("p"))<CR>
 
 " Straighten Quotes
 nmap <leader>q :exe '%s/[“”]/"/eg'<cr>:exe "%s/[‘’]/'/eg"<cr>:nohlsearch<cr>
@@ -208,5 +209,5 @@ let g:fuf_file_exclude = '\v\~$|\.(DS_Store|o|exe|dll|bak|orig|swp|pdf|doc|docx)
 " :%g/pattern/s/$/\=INC(1)/g
 
 " Abbreviations -----------------------------------------------------------
-"
+
 iab dmd Dr. McDaniel<Esc>
