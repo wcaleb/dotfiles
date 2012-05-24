@@ -1,4 +1,8 @@
-#
+
+# Attachment handling
+alternative_order text/plain text
+auto_view text/html
+
 # Some settings borrowed from http://www.spinnaker.de/mutt/muttrc
 
 unset confirmappend	# prompt for confirm when appending message to ex. mbox
