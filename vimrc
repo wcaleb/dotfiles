@@ -3,18 +3,29 @@ call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 filetype plugin on
 let mapleader = ","
+let maplocalleader = ","
 
 " Turn on Pandoc and muttrc syntax highlighting
-au BufRead,BufNewFile *.txt set ft=pdc	
-au BufRead,BufNewFile *.pdc set ft=pdc	
+au BufRead,BufNewFile *.txt set ft=pandoc	
+au BufRead,BufNewFile *.pdc set ft=pandoc	
 au BufRead,BufNewFile *.muttrc set ft=muttrc
 syntax enable
 
+" Settings for vim-pandoc plugin
+let g:pandoc_no_empty_implicits = 1
+let g:pandoc_no_folding = 1
+
 " Solarized Color Scheme available at http://ethanschoonover.com/solarized
-set background=light
+set background=dark
 colorscheme solarized
 
 " Caleb's main customizations  ------------------------------------------- 
+
+" Use Spotlight for grep
+" set grepprg=mdfind\ -onlyin\ %:p:h 
+
+" Set dictionary file for autocomplete of citations
+set dictionary=$HOME/.bibdict
 
 " Trick Vim into ignoring matching brackets
 let loaded_matchparen = 1
@@ -41,9 +52,10 @@ nmap <leader>q :exe '%s/[“”]/"/eg'<cr>:exe "%s/[‘’]/'/eg"<cr>:nohlsearch
 
 " Wrap Settings ----------------------------------------------------------- 
 
-set formatoptions=tq
-" set formatoptions+=12
-set textwidth=72
+" set textwidth=72
+" set formatoptions=tq
+set formatoptions+=12
+set textwidth=0
 set linebreak
 set wrap
 set wrapmargin=0
@@ -103,6 +115,7 @@ set showcmd
 set showmode
 
 " Macros
+" Change date from 4 July 1776 to July 4, 1776
 let @d='dwea pr,e'
 
 " Key Bindings -----------------------------------------------------------
@@ -112,6 +125,7 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 nmap <silent> ,/ :nohlsearch<CR>
+nnoremap ,bs :vsp<CR>:Bibs 
 nnoremap <leader>m :w<cr>	" easier save command 
 nnoremap <Down> <C-F>
 nnoremap <Up> <C-B>
@@ -127,6 +141,10 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+map <C-q> <C-w>c
+nnoremap <C-n> :cnext<cr>
+nnoremap <C-b> :cprev<cr>
+nnoremap <C-v> :cclose<cr>
 
 " Markdown Header and Format Bindings
 nmap <leader>i bysw*
@@ -143,6 +161,7 @@ imap <leader>4 <Esc>0i####<Space><Esc>A
 vmap <leader>l di[<Esc>pi](<Esc>:call setreg("\"",system("pbpaste"))<CR>pa)<Esc>
 
 " Pandoc Functions and Commands ------------------------------------------------
+
 function! PanPdf()
    exec ":! pandoc -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".pdf " . fnameescape(expand('%:p'))
 endfunction
@@ -159,8 +178,9 @@ function! PanLSU()
    exec ":! lsumake.sh " . fnameescape(expand('%:r'))
 endfunction
 
-" Command for my personal bibtex system
-command! -nargs=1 Bib :exe "e! " . fnameescape("/Users/wcm1/Dropbox/pubs/bib/<args>.bib")
+" Commands for my personal bibtex system
+command! -nargs=1 Bib :exe "e! " . fnameescape("/Users/wcm1/Dropbox/bib/<args>.bib")
+command! -nargs=1 Bibs :Ack --text --smart-case "<args>" /Users/wcm1/Dropbox/bib/*
 
 " A function that gets the year from a bib filename
 " For use in my bib.snippets setup
@@ -184,7 +204,7 @@ imap <leader>w <Esc>:call PasteWord()<cr>a
 " File Navigation ------------------------------------------------------------
 
 nmap `S :FufFile $HOME/Scripts/<cr>
-nmap `b :FufFile $HOME/Dropbox/research/Book/booktxt/final/<cr>
+nmap `b :FufFile $HOME/Dropbox/bib/<cr>
 nmap `d :FufDir $HOME/Dropbox/<cr>
 nmap `h :FufDir $HOME/<cr>
 nmap `l :FufFile $HOME/Dropbox/lectures/<cr>
@@ -193,6 +213,7 @@ nmap `p :FufFile $HOME/Dropbox/pubs/<cr>
 nmap `r :FufFile $HOME/Dropbox/research/<cr>
 nmap `s :FufFile $HOME/Students/<cr>
 nmap `t :FufFile $HOME/.pandoc/templates/<cr>
+nmap `w :FufFile $HOME/Dropbox/website/<cr>
 nmap `y :FufFile $HOME/Dropbox/syllabi/<cr>
 let g:fuf_file_exclude = '\v\~$|\.(DS_Store|o|exe|dll|bak|orig|swp|pdf|doc|docx)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 
