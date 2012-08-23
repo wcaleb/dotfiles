@@ -16,13 +16,26 @@ let g:pandoc_no_empty_implicits = 1
 let g:pandoc_no_folding = 1
 
 " Solarized Color Scheme available at http://ethanschoonover.com/solarized
-set background=dark
+set background=light
 colorscheme solarized
+
+" Distraction-free writing in MacVim
+if has("gui_running")
+  set lines=50
+  set columns=90
+  set guifont=Monaco:h14
+  set guioptions-=r
+  " set fuoptions=background:#00000000
+  set fu
+endif
 
 " Caleb's main customizations  ------------------------------------------- 
 
-" Use Spotlight for grep
-" set grepprg=mdfind\ -onlyin\ %:p:h 
+" Get Spotlight results in a Clam buffer
+command! -nargs=* Spot execute ":Clam mdfind -onlyin /Users/wcm1/ kind:text <args> | grep -E '\.(txt|bib)$'" | execute "redraw!"
+nnoremap <leader>/ :Spot 
+" Map ,ye to yank line in results and edit file in a new split
+nnoremap <leader>ye 0y$:exe "split " . fnameescape(getreg("\""))<cr>
 
 " Set dictionary file for autocomplete of citations
 set dictionary=$HOME/.bibdict
@@ -67,7 +80,7 @@ nmap <silent> <leader>aw :set fo+=a<CR>
 
 " remove line breaks within paragraphs (softwrap)
 " http://superuser.com/questions/200423/join-lines-inside-paragraphs-in-vim
-nmap <silent> <leader>sw Go<Esc>:g/^./ .,/^$/-1 join<CR>
+nmap <silent> <leader>sw Go<Esc>:3,$g/^./ .,/^$/-1 join<CR>
 
 " Global Settings ---------------------------------------------------------
 
@@ -124,9 +137,10 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
-nmap <silent> ,/ :nohlsearch<CR>
 nnoremap ,bs :vsp<CR>:Bibs 
+nnoremap ,wc :w !wc<CR>		" count words in current buffer
 nnoremap <leader>m :w<cr>	" easier save command 
+nnoremap <C-d> :bd<cr>
 nnoremap <Down> <C-F>
 nnoremap <Up> <C-B>
 nnoremap <leader><Down> <C-D>
@@ -141,10 +155,12 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-map <C-q> <C-w>c
+map <C-z> <C-w>c
+nnoremap <C-c> <C-w>c
+nnoremap <C-o> <C-w>o
 nnoremap <C-n> :cnext<cr>
 nnoremap <C-b> :cprev<cr>
-nnoremap <C-v> :cclose<cr>
+nnoremap <C-z> :cclose<cr>
 
 " Markdown Header and Format Bindings
 nmap <leader>i bysw*
@@ -162,6 +178,10 @@ vmap <leader>l di[<Esc>pi](<Esc>:call setreg("\"",system("pbpaste"))<CR>pa)<Esc>
 
 " Pandoc Functions and Commands ------------------------------------------------
 
+" Change regular pandoc footnotes to inline notes
+" Hat-tip to @udioioca at http://vimgolf.com/challenges/5014b2156318a4000200000b
+" nmap <leader>ln qn/[^<cr>*W"fd}d{N%ct]^[<C-R>f<Esc>gq{q
+
 function! PanPdf()
    exec ":! pandoc -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".pdf " . fnameescape(expand('%:p'))
 endfunction
@@ -174,12 +194,12 @@ function! PanSyllabus()
    exec ":! pandoc -s -S --template=syllabus.tex -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".pdf " . fnameescape(expand('%:p'))
 endfunction
 
-function! PanLSU()
-   exec ":! lsumake.sh " . fnameescape(expand('%:r'))
+function! PanDocx()
+   exec ":! pandoc -s -S -t docx -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".docx " . fnameescape(expand('%:p'))
 endfunction
 
 " Commands for my personal bibtex system
-command! -nargs=1 Bib :exe "e! " . fnameescape("/Users/wcm1/Dropbox/bib/<args>.bib")
+command! -nargs=1 Bib :exe "split " . fnameescape("/Users/wcm1/Dropbox/bib/<args>.bib")
 command! -nargs=1 Bibs :Ack --text --smart-case "<args>" /Users/wcm1/Dropbox/bib/*
 
 " A function that gets the year from a bib filename
@@ -198,13 +218,11 @@ function! PasteWord()
 	exe "%s/[‘’]/'/eg"
 	set nohlsearch
 endfunction
-nmap <leader>w :call PasteWord()<cr>
-imap <leader>w <Esc>:call PasteWord()<cr>a
 
 " File Navigation ------------------------------------------------------------
 
 nmap `S :FufFile $HOME/Scripts/<cr>
-nmap `b :FufFile $HOME/Dropbox/bib/<cr>
+nmap `b :sp<cr>:FufFile $HOME/Dropbox/bib/<cr>
 nmap `d :FufDir $HOME/Dropbox/<cr>
 nmap `h :FufDir $HOME/<cr>
 nmap `l :FufFile $HOME/Dropbox/lectures/<cr>
