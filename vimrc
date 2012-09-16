@@ -5,6 +5,8 @@ filetype plugin on
 let mapleader = ","
 let maplocalleader = ","
 
+runtime ftplugin/man.vim
+
 " Turn on Pandoc and muttrc syntax highlighting
 au BufRead,BufNewFile *.txt set ft=pandoc	
 au BufRead,BufNewFile *.pdc set ft=pandoc	
@@ -16,18 +18,18 @@ let g:pandoc_no_empty_implicits = 1
 let g:pandoc_no_folding = 1
 
 " Solarized Color Scheme available at http://ethanschoonover.com/solarized
-set background=light
+set background=dark
 colorscheme solarized
 
 " Distraction-free writing in MacVim
-if has("gui_running")
-  set lines=50
-  set columns=90
-  set guifont=Monaco:h14
-  set guioptions-=r
-  " set fuoptions=background:#00000000
-  set fu
-endif
+" if has("gui_running")
+"   set fu
+"   set lines=50
+"   set columns=90
+"   set guifont=Monaco:h14
+"   set guioptions-=r
+"   " set fuoptions=background:#00000000
+" endif
 
 " Caleb's main customizations  ------------------------------------------- 
 
@@ -182,6 +184,10 @@ vmap <leader>l di[<Esc>pi](<Esc>:call setreg("\"",system("pbpaste"))<CR>pa)<Esc>
 " Hat-tip to @udioioca at http://vimgolf.com/challenges/5014b2156318a4000200000b
 " nmap <leader>ln qn/[^<cr>*W"fd}d{N%ct]^[<C-R>f<Esc>gq{q
 
+" Preview buffer in browser
+" http://rtomayko.github.com/bcat/bcat.1.html#EXAMPLES
+nmap <leader>pm :!pandoc -t html --smart --include-in-header=/Users/wcm1/.pandoc/marked.css % \|bcat<cr><cr>
+
 function! PanPdf()
    exec ":! pandoc -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".pdf " . fnameescape(expand('%:p'))
 endfunction
@@ -195,7 +201,7 @@ function! PanSyllabus()
 endfunction
 
 function! PanDocx()
-   exec ":! pandoc -s -S -t docx -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".docx " . fnameescape(expand('%:p'))
+   exec ":! makebib;pandoc -s -S -t docx --reference-docx=/Users/wcm1/.pandoc/reference.docx --bibliography=/Users/wcm1/all.bib -o ~/Desktop/" . fnameescape(expand('%:t:r')) . ".docx " . fnameescape(expand('%:p'))
 endfunction
 
 " Commands for my personal bibtex system
