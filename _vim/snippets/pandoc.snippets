@@ -1,0 +1,70 @@
+# Based on http://pts.szit.bme.hu/bibtex-cheat-sheet.txt
+# Most optional fields are not included.
+snippet article
+	~~~~~{.bib}
+	@Article{ `Filename('', 'id')`,
+		author = {${1:authors separated by "and"}},
+		title = {${2:title}},
+		journal = {${3:journal}},
+		volume = ${4:volume},
+		number = ${5:number},
+		month = {${6:month}},
+		pages = {${7:pages}},
+		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+	}
+	~~~~~
+	${8}
+snippet book
+	~~~~~{.bib}
+	@Book{ `Filename('', 'id')`,
+		${1:author/editor} = {${2:$1s separated by "and"}},
+		title = {${3:title}},
+		address = {${4:city}},
+		publisher = {${5:publisher}},
+		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+	}
+	~~~~~
+	${6}
+snippet inbook
+	~~~~~{.bib}
+	@InBook{ `Filename('', 'id')`,
+		${1:author/editor} = {${2:$1s separated by "and"}},
+		title = {${3:title}},
+		${4:chapter/pages} = {${5:$4}},
+		address = {${6:city}},
+		publisher = {${7:publisher}},
+		pages = {${8:pages}},
+		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+	}
+	~~~~~
+	${9}
+snippet incollection
+	~~~~~{.bib}
+	@InCollection{ `Filename('', 'id')`,
+		author = {${1:authors separated by "and"}},
+		editor = {${2:editors separated by "and"}},
+		title = {${3:title}},
+		booktitle = {${4:book title}},
+		address = {${5:city}},
+		publisher = {${6:publisher}},
+		pages = {${7:pages}},
+		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+	}
+	~~~~~
+	${8}
+snippet misc
+	~~~~~{.bib}
+	@Misc{ `Filename('', 'id')`,
+		author = {${1:authors separated by "and"}},
+		title = {${2:title}},
+	}
+snippet phd
+	~~~~~{.bib}
+	@PhDThesis{ `Filename('', 'id')`,
+		author = {${1:authors separated by "and"}},
+		title = {${2:title}},
+		school = {${3:school}},
+		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+	}
+	~~~~~
+	{$4}
