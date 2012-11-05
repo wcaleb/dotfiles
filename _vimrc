@@ -26,8 +26,8 @@ source $HOME/.vim/bibtex.vimrc
 source $HOME/.vim/clipboard.vimrc
 source $HOME/.vim/colors.vimrc
 source $HOME/.vim/fuf.vimrc
+source $HOME/.vim/general.vimrc
 source $HOME/.vim/gitit.vimrc
 source $HOME/.vim/pandoc.vimrc
 source $HOME/.vim/search.vimrc
-source $HOME/.vim/wrap.vimrc
 
