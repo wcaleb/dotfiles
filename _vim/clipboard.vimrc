@@ -1,8 +1,8 @@
 " Basic copy and paste
 
-vmap <silent> <C-c> "+y
 nmap <silent> <C-p> :call setreg("\"",system("pbpaste"))<CR>p
 imap <silent> <C-p> <Esc>:call setreg("\"",system("pbpaste"))<CR>pa
+vmap <silent> <C-c> "+y
 
 " Copy selection to system clipboard, removing hardwraps with pandoc
 
