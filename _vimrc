@@ -19,7 +19,8 @@ map <leader>es :sp %%
 nmap <leader>m :w<cr>
 
 " Source/edit configuration files
-nmap <leader>ev :e $HOME/.vim/<cr>
+nmap <leader>ev :sp $HOME/.vim/<cr>
+nmap <leader>sv :source %<cr>
 source $HOME/.vim/abbrev.vimrc
 source $HOME/.vim/bibtex.vimrc
 source $HOME/.vim/clipboard.vimrc
