@@ -1,3 +1,6 @@
+" Turn off vim-pandoc section folding
+let g:pandoc_no_folding = 1
+
 " Preview buffer in browser after passing through pandoc
 " http://rtomayko.github.com/bcat/bcat.1.html#EXAMPLES
 

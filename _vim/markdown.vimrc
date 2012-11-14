@@ -12,6 +12,8 @@ imap <leader>3 <Esc>0i###<Space><Esc>A
 nmap <leader>4 0i####<Space><Esc>
 imap <leader>4 <Esc>0i####<Space><Esc>A
 
+vmap <leader>lb :s/\n/  \r/<cr>
+
 " Create in-line link with visually selected text and URL on system clipboard
 " Replicated by vim-pandoc plugin
 " vmap <leader>l di[<Esc>pi](<Esc>:call setreg("\"",system("pbpaste"))<CR>pa)<Esc>

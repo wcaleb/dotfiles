@@ -35,12 +35,12 @@ snippet inbook
 snippet incollection
 	@InCollection{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
-		editor = {${2:editors separated by "and"}},
-		title = {${3:title}},
-		booktitle = {${4:book title}},
-		address = {${5:city}},
-		publisher = {${6:publisher}},
-		pages = {${7:pages}},
+		title = {${2:title}},
+		pages = {${3:pages}},
+		editor = {${4:editors separated by "and"}},
+		booktitle = {${5:book title}},
+		address = {${6:city}},
+		publisher = {${7:publisher}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
 	}
 	${8}
