@@ -1,5 +1,5 @@
 " Vim syntax file
-" Language:	Pandoc (superset of Markdown)
+" Language:	PDC (superset of Markdown)
 " Maintainer:	Jeremy Schultz <taozhyn@gmail.com> 
 " URL:		
 " Version:	2
@@ -185,8 +185,8 @@ syn match pdcLinkTitle /\s*[("'].*[)"']/ contained contains=@Spell
 syn match pdcEmphasis   / \(_\|__\)\([^_ ]\|[^_]\( [^_]\)\+\)\+\1/    contains=@Spell
 
 "   Using Asterisks
-" syn match pdcEmphasis   / \(\*\|\*\*\)\([^\* ]\|[^\*]\( [^\*]\)\+\)\+\1/    contains=@Spell skipnl
-syn region pdcEmphasis start="\S\@<=\*\|\*\S\@=" end="\S\@<=\*\|\*\S\@=" keepend
+syn match pdcEmphasis   / \(\*\|\*\*\)\([^\* ]\|[^\*]\( [^\*]\)\+\)\+\1/    contains=@Spell
+
 
 """""""""""""""""""""""""""""""""""""""
 " Inline Code:
@@ -236,7 +236,7 @@ syn match pdcDefinitions /:\(\t\|[ ]\{3,}\)/  nextgroup=pdcListItem,pdcCodeBlock
 syn match pdcFootnoteID /\[\^[^\]]\+\]/ nextgroup=pdcFootnoteDef
 
 "   This does not work correctly
-" syn region pdcFootnoteDef  start=/:/ end=/^\n\+\(\(\t\+\|[ ]\{4,}\)\S\)\@!/ contained contains=pdcFootnoteDef
+syn region pdcFootnoteDef  start=/:/ end=/^\n\+\(\(\t\+\|[ ]\{4,}\)\S\)\@!/ contained contains=pdcFootnoteDef
 
 "   Inline footnotes
 syn region pdcFootnoteDef matchgroup=pdcFootnoteID start=/\^\[/ matchgroup=pdcFootnoteID end=/\]/
@@ -296,7 +296,7 @@ hi link pdcLinkID		Identifier
 hi link pdcLinkURL		Type
 hi link pdcLinkTitle		Comment
 
-hi link pdcFootnoteID		Comment
+hi link pdcFootnoteID		Identifier
 hi link pdcFootnoteDef		Comment
 hi link pandocFootnoteCont 	Error
 
@@ -326,5 +326,5 @@ hi link pdcNewLine		Error
 hi link pdctest		Error
 
 
-let b:current_syntax = "pandoc"
+let b:current_syntax = "pdc"
 

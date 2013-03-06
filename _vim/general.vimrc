@@ -7,6 +7,15 @@ set wrap
 set wrapmargin=0
 set display=lastline
 
+" iaWriter plugin for MacVim
+let g:fullscreen_colorscheme = "iawriter"
+let g:fullscreen_font = "Cousine:h14"
+let g:normal_colorscheme = "solarized"
+let g:normal_font="Inconsolata:h14"
+
+" Distraction Free Writing
+command! -nargs=0 Dfw execute ":call DistractionFreeWriting()"
+
 " toggle automatic hardwrapping 
 nmap <silent> <leader>wa :set fo-=a<CR> 
 nmap <silent> <leader>aw :set fo+=a<CR>
@@ -56,7 +65,7 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 
 " Make the command line two lines high and change the statusline display 
 set cmdheight=2
-set laststatus=2
+set laststatus=1
 set statusline=%F%m%r%h%w\ format=%{&ff}\ enc=%{&fenc}\ type=%Y
 set showcmd
 set showmode
@@ -76,6 +85,9 @@ vnoremap <Up> <C-B>
 vnoremap <leader><Down> <C-D>
 vnoremap <leader><Up> <C-U>
 
+" Visually select last pasted text
+nnoremap gp `[v`]
+
 " Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -87,3 +99,7 @@ nnoremap <C-o> <C-w>o
 nnoremap <C-n> :cnext<cr>
 nnoremap <C-b> :cprev<cr>
 nnoremap <C-z> :cclose<cr>
+
+" Day One entry
+nnoremap <leader>d :w !dayone new<cr>:bd!<cr>
+

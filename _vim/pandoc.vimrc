@@ -1,10 +1,16 @@
 " Turn off vim-pandoc section folding
-let g:pandoc_no_folding = 1
+" let g:pandoc_no_folding = 1
+let g:pandoc_folding = 0 
 
 " Preview buffer in browser after passing through pandoc
 " http://rtomayko.github.com/bcat/bcat.1.html#EXAMPLES
 
-nmap <leader>v :!pandoc -t html --smart --include-in-header=/Users/wcm1/.pandoc/marked.css % \|bcat<cr><cr>
+au! BufRead,BufNewFile ~/Dropbox/lectures se cfu=SlideComplete()
+fun! SlideComplete()
+	
+endfun
+
+" nmap <leader>v :!pandoc -t html --smart --include-in-header=/Users/wcm1/.pandoc/marked.css % \|bcat<cr><cr>
 
 " Convert buffer to html from markdown
 

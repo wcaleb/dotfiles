@@ -1,3 +1,4 @@
+nmap <leader>ls :FufBuffer<cr>
 nmap `S :FufFile $HOME/Scripts/<cr>
 nmap `k :sp<cr>:FufFile $HOME/Dropbox/wikidata/<cr>
 nmap `d :FufDir $HOME/Dropbox/<cr>

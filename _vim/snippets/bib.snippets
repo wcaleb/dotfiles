@@ -1,6 +1,7 @@
 # Based on http://pts.szit.bme.hu/bibtex-cheat-sheet.txt
 # Most optional fields are not included.
 snippet article
+	~~~~~{.bib}
 	@Article{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
@@ -11,8 +12,10 @@ snippet article
 		pages = {${7:pages}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
 	}
+	~~~~~
 	${8}
 snippet book
+	~~~~~{.bib}
 	@Book{ `Filename('', 'id')`,
 		${1:author/editor} = {${2:$1s separated by "and"}},
 		title = {${3:title}},
@@ -20,8 +23,10 @@ snippet book
 		publisher = {${5:publisher}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
 	}
+	~~~~~
 	${6}
 snippet inbook
+	~~~~~{.bib}
 	@InBook{ `Filename('', 'id')`,
 		${1:author/editor} = {${2:$1s separated by "and"}},
 		title = {${3:title}},
@@ -31,8 +36,10 @@ snippet inbook
 		pages = {${8:pages}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
 	}
+	~~~~~
 	${9}
 snippet incollection
+	~~~~~{.bib}
 	@InCollection{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
@@ -43,17 +50,21 @@ snippet incollection
 		publisher = {${7:publisher}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
 	}
+	~~~~~
 	${8}
 snippet misc
+	~~~~~{.bib}
 	@Misc{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
 	}
 snippet phd
+	~~~~~{.bib}
 	@PhDThesis{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
 		school = {${3:school}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
 	}
-	${4}
+	~~~~~
+	{$4}

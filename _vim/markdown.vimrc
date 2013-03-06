@@ -1,3 +1,6 @@
+"Open file in Marked.app
+"Via http://jasonheppler.org/2012/10/16/opening-marked-in-vim.html
+:nnoremap <leader>v :silent !open -a Marked.app '%:p'<cr>:redraw!<cr>
 
 " Markdown Header and Format Bindings
 
