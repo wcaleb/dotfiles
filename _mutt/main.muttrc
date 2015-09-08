@@ -10,8 +10,8 @@ source $HOME/.mutt/.mutt-colors/mutt-colors-solarized-light-16.muttrc
 unset confirmappend	# prompt for confirm when appending message to ex. mbox
 set delete_untag	# untag messages when marking them for deletion
 set delete=yes		# ask for confirmation when deleting messages?
-set display_filter=$HOME/Scripts/createalias.sh # filters new messages through a shell script that automatically generates a mutt alias for new senders
-set editor="/Applications/MacVim.app/Contents/MacOS/vim -c start"	# start editor in insert mode
+set display_filter="$HOME/programming/haskell/muttells/addalias /Users/wcm1/.dotfiles/_mutt/aliases.txt" # filters new messages through a shell script that automatically generates a mutt alias for new senders
+set editor="vim -c start"	# start editor in insert mode
 set fast_reply		# do not ask for to, subject,... when replying.
 set forward_decode=yes
 set forward_edit=ask-yes	# automatically start editor when forwarding.
@@ -22,9 +22,11 @@ unset mark_old		# mark new articles as old, when leaving mbox
 set mime_forward=no	# forward all attachments as a single attachment?
 set pager_index_lines=6	# add small message index at top of pager (5)
 set pager_stop		# Don't jump to next message at end of message.
-set print_command="muttprint -P letter -p TO_FILE:$HOME/tmp/mutt_attach/muttprint.ps && ps2pdf $HOME/tmp/mutt_attach/muttprint.ps $HOME/tmp/mutt_attach/muttprint.pdf && open $HOME/tmp/mutt_attach/muttprint.pdf"
+set pipe_decode
+set print_command="/Users/wcm1/programming/haskell/muttells/muttdoc | pandoc --template=email.tex -V fullpage --latex-engine=xelatex --listings -o ~/Desktop/email.pdf"
+# set print_command="muttprint -P letter -p TO_FILE:$HOME/tmp/mutt_attach/muttprint.ps && ps2pdf $HOME/tmp/mutt_attach/muttprint.ps $HOME/tmp/mutt_attach/muttprint.pdf && open $HOME/tmp/mutt_attach/muttprint.pdf"
 set print=yes		# Don't confirm print
-set query_command = "contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+set query_command = "contacts -m '%s'" # https://github.com/tgray/contacts
 set quit=yes		# don't ask before quitting.
 unset reply_self	# if unset, a reply to yourself implies reply to other
 set shell=/bin/bash
@@ -38,6 +40,8 @@ unset wait_key		# don't wait for keystroke to return from shell
 
 # Macros
 
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
 macro attach I <tag-prefix><save-entry><kill-line>$HOME/Inbox/ "Save attachments to Inbox"
 macro index,pager,attach \ca <change-folder><kill-line>=Archived<enter> "Change to Archived mailbox"
 macro index,pager,attach \cd <change-folder><kill-line>=Duncan<enter> "Change to Duncan mailbox"
@@ -45,6 +49,8 @@ macro index,pager,attach \cs <change-folder><kill-line>=Sent<tab><enter> "Change
 macro index,pager,attach \ci <change-folder><kill-line>imaps://wcm1@imap.mail.rice.edu:993/INBOX<enter> "Change to inbox"
 macro index <Down> <PageDown> "Advance a page in index"
 macro index <Up> <PageUp> "Reverse a page in index"
+
+macro index,pager \cv "<enter-command> unset pipe_decode<Enter><pipe-message><kill-line>viewhtmlmsg<enter><enter-command>set pipe_decode<Enter>" "Open message in browser with viewhtmlmsg"
 
 # macro compose B "\
 # :set content_type='multipart/alternative; boundary=aaLc9KT9j5DEsRQtRaroU6vdbZdHE3cN'\
@@ -62,7 +68,7 @@ macro index \eb "<search>~b " "search in message bodies"
 # simulate the old url menu
 macro index,pager,attach,compose \cb "\
 <enter-command> set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
-<pipe-message> urlview<Enter>\
+<pipe-message> /Users/wcm1/programming/haskell/muttells/hurlview<Enter>\
 <enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
 "call urlview to extract URLs out of a message"
 
