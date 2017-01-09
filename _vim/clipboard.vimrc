@@ -1,8 +1,9 @@
 " Basic copy and paste
 
+
 nmap <silent> <C-p> :call setreg("\"",system("pbpaste"))<CR>p
 imap <silent> <C-p> <Esc>:call setreg("\"",system("pbpaste"))<CR>pa
-vmap <silent> <C-c> "+y
+vnoremap <silent> <C-c> :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
 
 " Copy selection to system clipboard, removing hardwraps with pandoc
 

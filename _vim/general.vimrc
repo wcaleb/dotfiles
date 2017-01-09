@@ -1,5 +1,5 @@
+" set formatoptions=tqcwn
 " set textwidth=72
-" set formatoptions=tq
 set formatoptions+=12
 set textwidth=0
 set linebreak
@@ -7,14 +7,17 @@ set wrap
 set wrapmargin=0
 set display=lastline
 
-" iaWriter plugin for MacVim
-let g:fullscreen_colorscheme = "iawriter"
-let g:fullscreen_font = "Cousine:h14"
-let g:normal_colorscheme = "solarized"
-let g:normal_font="Inconsolata:h14"
+" netrw settings
+let g:netrw_banner = 0            " no banner
+let g:netrw_browse_split = 4      " open files in previous window
+let g:netrw_winsize = 10          " win size is 25% of page
+let g:netrw_liststyle = 3         " directory tree
 
-" Distraction Free Writing
-command! -nargs=0 Dfw execute ":call DistractionFreeWriting()"
+" Syntastic
+let g:syntastic_enable_highlighting = 0
+ 
+" calendar.vim
+let g:calendar_google_calendar = 1
 
 " toggle automatic hardwrapping 
 nmap <silent> <leader>wa :set fo-=a<CR> 
@@ -33,6 +36,7 @@ set backup
 set backupdir=$HOME/tmp/vim/
 " set copyindent    		" copy the previous indentation on autoindenting 
 set directory=$HOME/tmp/vim/
+set expandtab
 set hidden				" allow me to hide unsaved buffers
 set history=1000        " remember more commands and search history
 set nohlsearch     		" highlight search terms 
@@ -95,11 +99,18 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 map <C-z> <C-w>c
 nnoremap <C-c> <C-w>c
-nnoremap <C-o> <C-w>o
+nnoremap <C-f> <C-w>o
 nnoremap <C-n> :cnext<cr>
 nnoremap <C-b> :cprev<cr>
 nnoremap <C-z> :cclose<cr>
 
 " Day One entry
 nnoremap <leader>d :w !dayone new<cr>:bd!<cr>
+
+" Mutt alias file
+nnoremap <leader>ea :sp $HOME/.dotfiles/_mutt/aliases.txt<CR>
+
+" Autocompletion of BibTex entries
+set dictionary=$HOME/.vim/dicts/bibtexpages.txt
+set complete+=k
 
